@@ -2,6 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refreshMongo');
 const app = require('../app');
+const Category = require('../models/category');
 
 describe('category', () => {
   beforeEach(() => {
@@ -37,6 +38,14 @@ describe('category', () => {
       .post('/categories')
       .send(category)
       .expect(201)
+      .expect((res) => {
+        Category.findOne(category, (err, data) => {
+          if (err) {
+            return next(err);
+          }
+          res.body.uri.should.equal('categories/' + data._id);
+        })
+      })
       .end(done);
   });
 

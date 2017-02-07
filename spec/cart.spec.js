@@ -2,6 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refreshMongo');
 const app = require('../app');
+const Cart = require('../models/cart');
 
 describe('cart', () => {
   beforeEach(() => {
@@ -34,11 +35,13 @@ describe('cart', () => {
       items: [
         {
           count: 1,
-          itemId: '5899256418d3dc09c04e5552'
+          itemId: '5899256418d3dc09c04e5552',
+          _id: '5899d9cfb9b4bc55c5b044b1'
         },
         {
           count: 3,
-          itemId: '5899256418d3dc09c04e5555'
+          itemId: '5899256418d3dc09c04e5555',
+          _id: '5899d9cfb9b4bc55c5b044b2'
         }
       ]
     };
@@ -47,6 +50,14 @@ describe('cart', () => {
       .post('/carts')
       .send(cart)
       .expect(201)
+      .expect((res) => {
+        Cart.findOne({userId: '010'}, (err, data) => {
+          if (err) {
+            return next(err);
+          }
+          res.body.uri.should.equal('carts/' + data._id);
+        })
+      })
       .end(done);
   });
 

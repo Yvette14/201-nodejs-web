@@ -2,6 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refreshMongo');
 const app = require('../app');
+const Item = require('../models/item');
 
 describe('item api', () => {
   beforeEach(() => {
@@ -38,6 +39,14 @@ describe('item api', () => {
       .post('/items')
       .send(item)
       .expect(201)
+      .expect((res) => {
+        Item.findOne(item, (err, data) => {
+          if (err) {
+            return next(err);
+          }
+          res.body.uri.should.equal('items/' + data._id);
+        })
+      })
       .end(done);
   });
 
