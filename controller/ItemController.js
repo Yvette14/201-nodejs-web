@@ -49,6 +49,16 @@ const ItemController = class {
       res.sendStatus(httpCode.NO_CONTENT);
     })
   }
+
+  update(req, res, next) {
+    const id = req.params.id;
+    Item.update({_id: id}, req.body, (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.sendStatus(httpCode.NO_CONTENT);
+    })
+  }
 };
 
 module.exports = ItemController;
