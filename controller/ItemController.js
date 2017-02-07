@@ -30,11 +30,11 @@ const ItemController = class {
 
   create(req, res, next) {
     const item = req.body;
-    new Item(item).save((err) => {
+    new Item(item).save((err, data) => {
       if (err) {
         return next(err);
       }
-      res.sendStatus(httpCode.CREATE);
+      res.status(httpCode.CREATE).send({uri: 'items/' + data._id});
     })
   }
 
