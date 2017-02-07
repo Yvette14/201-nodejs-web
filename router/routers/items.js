@@ -5,5 +5,6 @@ const router = Router();
 const itemCtrl = new ItemController();
 
 router.get('/', itemCtrl.getAll);
+router.get('/:id', itemCtrl.getOne);
 
 module.exports = router;

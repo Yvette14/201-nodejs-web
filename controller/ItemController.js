@@ -15,6 +15,18 @@ const ItemController = class {
       })
     })
   }
+
+  getOne(req, res, next) {
+    const id = req.params.id;
+    Item.findById({_id: id}, (err, data) => {
+      if (data === null) {
+        return res.sendStatus(httpCode.NOT_FOUND);
+      } else if (err) {
+        return next(err);
+      }
+      res.status(httpCode.OK).send(data);
+    })
+  }
 };
 
 module.exports = ItemController;
