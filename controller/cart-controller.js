@@ -1,36 +1,35 @@
+const async = require('async');
 const Cart = require('../models/cart');
-const httpCode = require('../contant/httpCode.json');
+const httpCode = require('../constant/httpCode.json');
 
 const CartController = class {
 
   getAll(req, res, next) {
-    Cart.find()
-      .populate('items.item')
-      .exec((err, data) => {
-        if (err) {
-          return next(err);
-        }
-        Cart.count((error, count) => {
-          if (error) {
-            return next(error);
-          }
-          res.status(httpCode.OK).send({items: data, totalCount: count});
-        })
-      })
+    async.series({
+      items: (done) => {
+        Cart.find({}, done);
+      },
+      totalCount: (done) => {
+        Cart.count(done);
+      }
+    }, (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      res.status(httpCode.OK).send(result);
+    })
   }
 
   getOne(req, res, next) {
     const id = req.params.id;
-    Cart.findOne({_id: id})
-      .populate('items.item')
-      .exec((err, data) => {
-        if (data === null) {
-          return res.sendStatus(httpCode.NOT_FOUND);
-        } else if (err) {
-          return next(err);
-        }
-        res.status(httpCode.OK).send(data);
-      })
+    Cart.findOne({_id: id}, (err, data) => {
+      if (err) {
+        return next(err);
+      } else if (!data) {
+        return res.sendStatus(httpCode.NOT_FOUND);
+      }
+      res.status(httpCode.OK).send(data);
+    })
   }
 
   create(req, res, next) {
@@ -46,10 +45,10 @@ const CartController = class {
   delete(req, res, next) {
     const id = req.params.id;
     Cart.remove({_id: id}, (err, data) => {
-      if (data.result.n === 0) {
-        return res.sendStatus(httpCode.NOT_FOUND);
-      } else if (err) {
+      if (err) {
         return next(err);
+      } else if (data.result.n === 0) {
+        return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
     })

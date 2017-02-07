@@ -1,30 +1,33 @@
+const async = require('async');
 const Category = require('../models/category');
 const Item = require('../models/item');
-const httpCode = require('../contant/httpCode.json');
+const httpCode = require('../constant/httpCode.json');
 
 const CategoryController = class {
 
-  getAll(req, res, next) {
-    Category.find({}, (err, data) => {
-      if (err) {
+  getAll(req,res,next){
+    async.series({
+      items:(done)=>{
+        Category.find({},done);
+      },
+      totalCount:(done)=>{
+        Category.count(done);
+      },
+    },(err,result)=>{
+      if(err){
         return next(err);
       }
-      Category.count((error, count) => {
-        if (error) {
-          return next(error);
-        }
-        res.status(httpCode.OK).send({items: data, totalCount: count});
-      })
+      res.status(httpCode.OK).send(result);
     })
   }
 
   getOne(req, res, next) {
     const id = req.params.id;
     Category.findOne({_id: id}, (err, data) => {
-      if (data === null) {
-        return res.sendStatus(httpCode.NOT_FOUND);
-      } else if (err) {
+      if(err){
         return next(err);
+      }else if(!data){
+        return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.status(httpCode.OK).send(data);
     })
@@ -42,7 +45,7 @@ const CategoryController = class {
 
   delete(req, res, next) {
     const id = req.params.id;
-    Item.findOne({category: id}, (error, data) => {
+    Item.findOne({categoryId: id}, (error, data) => {
       if (error) {
         return next(error);
       } else if (data !== null) {
