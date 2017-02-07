@@ -37,6 +37,18 @@ const ItemController = class {
       res.sendStatus(httpCode.CREATE);
     })
   }
+
+  delete(req, res, next) {
+    const id = req.params.id;
+    Item.remove({_id: id}, (err, data) => {
+      if (data.result.n === 0) {
+        return res.sendStatus(httpCode.NOT_FOUND);
+      } else if (err) {
+        return next(err);
+      }
+      res.sendStatus(httpCode.NO_CONTENT);
+    })
+  }
 };
 
 module.exports = ItemController;
