@@ -1,4 +1,5 @@
 const Category = require('../models/category');
+const Item = require('../models/item');
 const httpCode = require('../contant/httpCode.json');
 
 const CategoryController = class {
@@ -28,6 +29,44 @@ const CategoryController = class {
       res.status(httpCode.OK).send(data);
     })
   }
+
+  create(req, res, next) {
+    const category = req.body;
+    new Category(category).save((err, data) => {
+      if (err) {
+        return next(err);
+      }
+      res.status(httpCode.CREATE).send({uri: "categories/" + data._id});
+    })
+  }
+
+  delete(req, res, next) {
+    const id = req.params.id;
+    Item.findOne({category: id}, (error, data) => {
+      if (error) {
+        return next(error);
+      } else if (data !== null) {
+        return res.sendStatus(httpCode.FORBIDDEN);
+      }
+      Category.remove({_id: id}, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.sendStatus(httpCode.NO_CONTENT);
+      })
+    })
+  }
+
+  update(req, res, next) {
+    const id = req.params.id;
+    Category.update({_id: id}, req.body, (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.sendStatus(httpCode.NO_CONTENT);
+    })
+  }
+
 };
 
 module.exports = CategoryController;
