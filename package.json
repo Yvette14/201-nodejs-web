@@ -6,6 +6,7 @@
   "scripts": {
     "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- app.js",
+    "refreshMongo": "npm run babel-node -- refreshMongo.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
