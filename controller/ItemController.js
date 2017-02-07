@@ -27,6 +27,16 @@ const ItemController = class {
       res.status(httpCode.OK).send(data);
     })
   }
+
+  create(req, res, next) {
+    const item = req.body;
+    new Item(item).save((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.sendStatus(httpCode.CREATE);
+    })
+  }
 };
 
 module.exports = ItemController;
