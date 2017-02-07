@@ -1,25 +1,30 @@
-import mongoose from 'mongoose';
-import Item from './models/item';
-import items from './data/items.json';
-import Category from './models/category';
-import categories from './data/categories.json';
-import Cart from './models/cart';
-import carts from './data/carts.json';
+const mongoose = require('mongoose');
+const Item = require('./models/item');
+const items = require('./data/items.json');
+const Category = require('./models/category');
+const categories = require('./data/categories.json');
+const Cart = require('./models/cart');
+const carts = require('./data/carts.json');
 
-mongoose.connect('mongodb://localhost/supermarket');
-Item.remove(() => {
-  return;
-});
-Item.create(items);
+// mongoose.connect('mongodb://localhost/supermarket');
 
-Category.remove(() => {
-  return;
-});
-Category.create(categories);
+function refreshMongo() {
+  Item.remove(() => {
+    return;
+  });
+  Item.create(items);
 
-Cart.remove(() => {
-  return;
-})
+  Category.remove(() => {
+    return;
+  });
+  Category.create(categories);
 
-Cart.create(carts);
+  Cart.remove(() => {
+    return;
+  })
+
+  Cart.create(carts);
+}
+
 mongoose.connection.close();
+module.exports = refreshMongo;
