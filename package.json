@@ -7,7 +7,7 @@
     "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- app.js",
     "refreshMongo": "npm run babel-node -- refreshMongo.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha  --compilers js:babel-core/register spec/*spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,9 @@
     "body-parser": "^1.16.0",
     "config": "^1.24.0",
     "express": "^4.14.0",
-    "mongoose": "^4.7.6"
+    "mocha": "^3.2.0",
+    "mongoose": "^4.7.6",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
