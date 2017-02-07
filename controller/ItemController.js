@@ -2,30 +2,36 @@ const Item = require('../models/item');
 const httpCode = require('../contant/httpCode.json');
 
 const ItemController = class {
+
   getAll(req, res, next) {
-    Item.find({}, (err, data) => {
-      if (err) {
-        return next(err);
-      }
-      Item.count((err, doc) => {
+    Item.find()
+      .populate('category')
+      .exec((err, data) => {
         if (err) {
           return next(err);
         }
-        res.status(httpCode.OK).send({items: data, totalCount: doc})
+        Item.count((error, count) => {
+          if (error) {
+            return next(error);
+          }
+          res.status(httpCode.OK).send({items: data, totalCount: count});
+        })
       })
-    })
+
   }
 
   getOne(req, res, next) {
     const id = req.params.id;
-    Item.findById({_id: id}, (err, data) => {
-      if (data === null) {
-        return res.sendStatus(httpCode.NOT_FOUND);
-      } else if (err) {
-        return next(err);
-      }
-      res.status(httpCode.OK).send(data);
-    })
+    Item.findById({_id: id})
+      .populate('category')
+      .exec((err, data) => {
+        if (data === null) {
+          return res.sendStatus(httpCode.NOT_FOUND);
+        } else if (err) {
+          return next(err);
+        }
+        res.status(httpCode.OK).send(data);
+      })
   }
 
   create(req, res, next) {
