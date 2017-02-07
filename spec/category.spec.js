@@ -3,58 +3,58 @@ const request = require('supertest');
 const refreshMongo = require('../refreshMongo');
 const app = require('../app');
 
-describe('item api', () => {
+describe('category', () => {
   beforeEach(() => {
     refreshMongo();
   });
 
   it('get all', (done) => {
     request(app)
-      .get('/items')
+      .get('/categories')
       .expect((res) => {
         res.statusCode.should.equal(200);
-        res.body.totalCount.should.equal(5);
+        res.body.totalCount.should.equal(7);
       })
       .end(done);
   });
 
   it('get one', (done) => {
     request(app)
-      .get('/items/5899256418d3dc09c04e5552')
+      .get('/categories/589952c2e063c41484b0dc1f')
       .expect((res) => {
         res.statusCode.should.equal(200);
-        res.body.name.should.equal('商品一');
+        res.body.name.should.equal('类别一');
       })
       .end(done);
   });
 
   it('create', (done) => {
-    const item = {
-      name: '新商品',
-      price: 3.0,
-      categoryId: '589952c2e063c41484b0dc6f'
+    const category = {
+      name: '新类别'
     };
+
     request(app)
-      .post('/items')
-      .send(item)
+      .post('/categories')
+      .send(category)
       .expect(201)
       .end(done);
   });
 
   it('delete', (done) => {
     request(app)
-      .delete('/items/5899256418d3dc09c04e5556')
+      .delete('/categories/589952c2e063c41484b0dc6a')
       .expect(204)
       .end(done);
   });
 
   it('put', (done) => {
-    const item = {
-      price: 3.0
+    const category = {
+      name: '修改的类别'
     };
+
     request(app)
-      .put('/items/5899256418d3dc09c04e5552')
-      .send(item)
+      .put('/categories/589952c2e063c41484b0dc1f')
+      .send(category)
       .expect(204)
       .end(done);
   })
