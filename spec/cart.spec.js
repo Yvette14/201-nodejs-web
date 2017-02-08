@@ -82,7 +82,7 @@ describe('cart', () => {
       .end(done);
   });
 
-  it('put', (done) => {
+  it('update 204', (done) => {
     const cart = {
       userId: '002',
       items: [
@@ -102,5 +102,28 @@ describe('cart', () => {
       .send(cart)
       .expect(204)
       .end(done);
-  })
+  });
+
+  it('update 404', (done) => {
+    const cart = {
+      userId: '002',
+      items: [
+        {
+          count: 3,
+          itemId: '5899256418d3dc09c04e5552'
+        },
+        {
+          count: 2,
+          itemId: '5899256418d3dc09c04e5555'
+        }
+      ]
+    };
+
+    request(app)
+      .put('/carts/5899256418d3dc09c04e545a')
+      .send(cart)
+      .expect(404)
+      .end(done);
+  });
+
 });
