@@ -45,8 +45,7 @@ const CartController = class {
         return res.sendStatus(httpCode.NOT_FOUND);
       }
       let doc = data.toJSON();
-      const items = transIdToUri(doc.items);
-      doc.items = items;
+      doc.items = transIdToUri(doc.items);
       res.status(httpCode.OK).send(doc);
     })
   }
