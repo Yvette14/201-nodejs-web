@@ -37,7 +37,7 @@ const ItemController = class {
 
   create(req, res, next) {
     const item = req.body;
-    new Item(item).save((err, data) => {
+    Item.create(item, (err, data) => {
       if (err) {
         return next(err);
       }

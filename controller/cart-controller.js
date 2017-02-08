@@ -52,7 +52,7 @@ const CartController = class {
 
   create(req, res, next) {
     const cart = req.body;
-    new Cart(cart).save((err, data) => {
+    Cart.create(cart, (err, data) => {
       if (err) {
         return next(err);
       }
