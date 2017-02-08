@@ -22,8 +22,8 @@ const CategoryController = class {
   }
 
   getOne(req, res, next) {
-    const id = req.params.id;
-    Category.findOne({_id: id}, (err, data) => {
+    const categoryId = req.params.categoryId;
+    Category.findOne({_id: categoryId}, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {
@@ -44,16 +44,16 @@ const CategoryController = class {
   }
 
   delete(req, res, next) {
-    const id = req.params.id;
+    const categoryId = req.params.categoryId;
     async.waterfall([
       (done) => {
-        Item.findOne({category: id}, done);
+        Item.findOne({category: categoryId}, done);
       },
       (data, done) => {
         if (data) {
           done(true, null);
         } else {
-          Category.findOneAndRemove({_id: id}, done);
+          Category.findOneAndRemove({_id: categoryId}, done);
         }
       }
     ], (err, data) => {
@@ -72,8 +72,8 @@ const CategoryController = class {
   }
 
   update(req, res, next) {
-    const id = req.params.id;
-    Category.findOneAndUpdate({_id: id}, req.body, (err, data) => {
+    const categoryId = req.params.categoryId;
+    Category.findOneAndUpdate({_id: categoryId}, req.body, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {

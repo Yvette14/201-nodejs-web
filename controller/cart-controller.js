@@ -37,8 +37,8 @@ const CartController = class {
   }
 
   getOne(req, res, next) {
-    const id = req.params.id;
-    Cart.findOne({_id: id}, (err, data) => {
+    const cartId = req.params.cartId;
+    Cart.findOne({_id: cartId}, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {
@@ -61,8 +61,8 @@ const CartController = class {
   }
 
   delete(req, res, next) {
-    const id = req.params.id;
-    Cart.findOneAndRemove({_id: id}, (err, data) => {
+    const cartId = req.params.cartId;
+    Cart.findOneAndRemove({_id: cartId}, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {
@@ -73,8 +73,8 @@ const CartController = class {
   }
 
   update(req, res, next) {
-    const id = req.params.id;
-    Cart.findOneAndUpdate({_id: id}, req.body, (err, data) => {
+    const cartId = req.params.cartId;
+    Cart.findOneAndUpdate({_id: cartId}, req.body, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {

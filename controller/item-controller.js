@@ -22,8 +22,8 @@ const ItemController = class {
   }
 
   getOne(req, res, next) {
-    const id = req.params.id;
-    Item.findById({_id: id})
+    const itemId = req.params.itemId;
+    Item.findById({_id: itemId})
       .populate('category')
       .exec((err, data) => {
         if (err) {
@@ -46,8 +46,8 @@ const ItemController = class {
   }
 
   delete(req, res, next) {
-    const id = req.params.id;
-    Item.findOneAndRemove({_id: id}, (err, data) => {
+    const itemId = req.params.itemId;
+    Item.findOneAndRemove({_id: itemId}, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {
@@ -58,8 +58,8 @@ const ItemController = class {
   }
 
   update(req, res, next) {
-    const id = req.params.id;
-    Item.findOneAndUpdate({_id: id}, req.body, (err, data) => {
+    const itemId = req.params.itemId;
+    Item.findOneAndUpdate({_id: itemId}, req.body, (err, data) => {
       if (err) {
         return next(err);
       } else if (!data) {

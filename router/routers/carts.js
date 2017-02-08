@@ -5,9 +5,9 @@ const router = Router();
 const cartCtrl = new CartController();
 
 router.get('/', cartCtrl.getAll);
-router.get('/:id', cartCtrl.getOne);
+router.get('/:cartId', cartCtrl.getOne);
 router.post('/', cartCtrl.create);
-router.delete('/:id', cartCtrl.delete);
-router.put('/:id', cartCtrl.update);
+router.delete('/:cartId', cartCtrl.delete);
+router.put('/:cartId', cartCtrl.update);
 
 module.exports = router;
