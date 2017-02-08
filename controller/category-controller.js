@@ -5,16 +5,16 @@ const httpCode = require('../constant/httpCode.json');
 
 const CategoryController = class {
 
-  getAll(req,res,next){
+  getAll(req, res, next) {
     async.series({
-      items:(done)=>{
-        Category.find({},done);
+      items: (done) => {
+        Category.find({}, done);
       },
-      totalCount:(done)=>{
+      totalCount: (done) => {
         Category.count(done);
       },
-    },(err,result)=>{
-      if(err){
+    }, (err, result) => {
+      if (err) {
         return next(err);
       }
       res.status(httpCode.OK).send(result);
@@ -24,9 +24,9 @@ const CategoryController = class {
   getOne(req, res, next) {
     const id = req.params.id;
     Category.findOne({_id: id}, (err, data) => {
-      if(err){
+      if (err) {
         return next(err);
-      }else if(!data){
+      } else if (!data) {
         return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.status(httpCode.OK).send(data);
@@ -59,6 +59,20 @@ const CategoryController = class {
       })
     })
   }
+
+  // delete(req, res, next) {
+  //   const id = req.params.id;
+  //   async.waterfall([
+  //     (done) => {
+  //       Item.findOne({categoryId: id}, done);
+  //     },
+  //     (data,done)=>{
+  //       if(data){
+  //         done(data);
+  //       }
+  //     }
+  //   ])
+  // }
 
   update(req, res, next) {
     const id = req.params.id;

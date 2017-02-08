@@ -47,10 +47,10 @@ const ItemController = class {
 
   delete(req, res, next) {
     const id = req.params.id;
-    Item.remove({_id: id}, (err, data) => {
+    Item.findOneAndRemove({_id: id}, (err, data) => {
       if (err) {
         return next(err);
-      } else if (data.result.n === 0) {
+      } else if (!data) {
         return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
@@ -59,13 +59,16 @@ const ItemController = class {
 
   update(req, res, next) {
     const id = req.params.id;
-    Item.update({_id: id}, req.body, (err) => {
+    Item.findOneAndUpdate({_id: id}, req.body, (err, data) => {
       if (err) {
         return next(err);
+      } else if (!data) {
+        return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
     })
   }
+
 };
 
 module.exports = ItemController;
