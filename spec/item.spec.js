@@ -1,6 +1,6 @@
 require('should');
 const request = require('supertest');
-const refreshMongo = require('../refreshMongo');
+const refreshMongo = require('../refresh-mongo');
 const app = require('../app');
 const Item = require('../models/item');
 

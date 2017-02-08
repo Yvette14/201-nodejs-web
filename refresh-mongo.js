@@ -6,8 +6,6 @@ const categories = require('./data/categories.json');
 const Cart = require('./models/cart');
 const carts = require('./data/carts.json');
 
-// mongoose.connect('mongodb://localhost/supermarket');
-
 function refreshMongo() {
   Item.remove(() => {
     return;
