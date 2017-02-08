@@ -44,10 +44,10 @@ const CartController = class {
 
   delete(req, res, next) {
     const id = req.params.id;
-    Cart.remove({_id: id}, (err, data) => {
+    Cart.findOneAndRemove({_id: id}, (err, data) => {
       if (err) {
         return next(err);
-      } else if (data.result.n === 0) {
+      } else if (!data) {
         return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
@@ -56,9 +56,11 @@ const CartController = class {
 
   update(req, res, next) {
     const id = req.params.id;
-    Cart.update({_id: id}, req.body, (err) => {
+    Cart.findOneAndUpdate({_id: id}, req.body, (err, data) => {
       if (err) {
         return next(err);
+      } else if (!data) {
+        return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
     })

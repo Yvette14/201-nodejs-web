@@ -45,40 +45,39 @@ const CategoryController = class {
 
   delete(req, res, next) {
     const id = req.params.id;
-    Item.findOne({categoryId: id}, (error, data) => {
-      if (error) {
-        return next(error);
-      } else if (data !== null) {
+    async.waterfall([
+      (done) => {
+        Item.findOne({categoryId: id}, done);
+      },
+      (data, done) => {
+        if (data) {
+          done(true, null);
+        } else {
+          Category.findOneAndRemove({_id: id}, done);
+        }
+      }
+    ], (err, data) => {
+      if (err === true) {
         return res.sendStatus(httpCode.FORBIDDEN);
       }
-      Category.remove({_id: id}, (err) => {
-        if (err) {
-          return next(err);
-        }
-        res.sendStatus(httpCode.NO_CONTENT);
-      })
+      if (err) {
+        return next(err);
+      }
+
+      if (!data) {
+        return res.sendStatus(httpCode.NOT_FOUND);
+      }
+      res.sendStatus(httpCode.NO_CONTENT);
     })
   }
 
-  // delete(req, res, next) {
-  //   const id = req.params.id;
-  //   async.waterfall([
-  //     (done) => {
-  //       Item.findOne({categoryId: id}, done);
-  //     },
-  //     (data,done)=>{
-  //       if(data){
-  //         done(data);
-  //       }
-  //     }
-  //   ])
-  // }
-
   update(req, res, next) {
     const id = req.params.id;
-    Category.update({_id: id}, req.body, (err) => {
+    Category.findOneAndUpdate({_id: id}, req.body, (err, data) => {
       if (err) {
         return next(err);
+      } else if (!data) {
+        return res.sendStatus(httpCode.NOT_FOUND);
       }
       res.sendStatus(httpCode.NO_CONTENT);
     })
