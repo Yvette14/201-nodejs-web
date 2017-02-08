@@ -2,7 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refresh-mongo');
 const app = require('../app');
-const Item = require('../models/item');
+const Item = require('../model/item');
 
 describe('item api', () => {
   beforeEach(() => {

@@ -2,7 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refresh-mongo');
 const app = require('../app');
-const Category = require('../models/category');
+const Category = require('../model/category');
 
 describe('category', () => {
   beforeEach(() => {

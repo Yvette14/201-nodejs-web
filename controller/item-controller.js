@@ -1,5 +1,5 @@
 const async = require('async');
-const Item = require('../models/item');
+const Item = require('../model/item');
 const httpCode = require('../constant/httpCode.json');
 
 const ItemController = class {

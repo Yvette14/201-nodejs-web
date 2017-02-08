@@ -8,6 +8,7 @@ const cartSchema = new Schema({
     count: Number,
     itemId: {
       type: Schema.Types.ObjectId,
+      //fixme type:Schema.ObjectId,
       ref: 'Item'
     }
   }]

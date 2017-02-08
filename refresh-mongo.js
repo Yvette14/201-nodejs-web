@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Item = require('./models/item');
+const Item = require('./model/item');
 const items = require('./data/items.json');
-const Category = require('./models/category');
+const Category = require('./model/category');
 const categories = require('./data/categories.json');
-const Cart = require('./models/cart');
+const Cart = require('./model/cart');
 const carts = require('./data/carts.json');
 
 function refreshMongo() {

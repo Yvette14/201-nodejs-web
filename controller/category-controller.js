@@ -1,6 +1,6 @@
 const async = require('async');
-const Category = require('../models/category');
-const Item = require('../models/item');
+const Category = require('../model/category');
+const Item = require('../model/item');
 const httpCode = require('../constant/httpCode.json');
 
 const CategoryController = class {

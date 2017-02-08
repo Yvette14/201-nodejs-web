@@ -2,7 +2,7 @@ require('should');
 const request = require('supertest');
 const refreshMongo = require('../refresh-mongo');
 const app = require('../app');
-const Cart = require('../models/cart');
+const Cart = require('../model/cart');
 
 describe('cart', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 const async = require('async');
-const Cart = require('../models/cart');
+const Cart = require('../model/cart');
 const httpCode = require('../constant/httpCode.json');
 
 function transIdToUri(items) {
