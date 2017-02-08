@@ -5,8 +5,8 @@ const Category = require('./category');
 const itemSchema = new Schema({
   name: String,
   price: Number,
-  categoryId: [{
-    type: Schema.Types.ObjectId,
+  category: [{
+    type: Schema.ObjectId,
     ref: 'Category'
   }]
 });

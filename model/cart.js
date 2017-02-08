@@ -6,9 +6,8 @@ const cartSchema = new Schema({
   userId: String,
   items: [{
     count: Number,
-    itemId: {
-      type: Schema.Types.ObjectId,
-      //fixme type:Schema.ObjectId,
+    item: {
+      type: Schema.ObjectId,
       ref: 'Item'
     }
   }]
