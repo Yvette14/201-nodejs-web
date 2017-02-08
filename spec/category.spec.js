@@ -63,10 +63,10 @@ describe('category', () => {
       .end(done);
   });
 
-  it('delete 403', (done) => {
+  it('delete 400', (done) => {
     request(app)
       .delete('/categories/589952c2e063c41484b0dc1f')
-      .expect(403)
+      .expect(400)
       .end(done);
   });
 

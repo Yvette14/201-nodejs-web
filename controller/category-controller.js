@@ -58,7 +58,7 @@ const CategoryController = class {
       }
     ], (err, data) => {
       if (err === true) {
-        return res.sendStatus(httpCode.FORBIDDEN);
+        return res.sendStatus(httpCode.BAD_REQUEST);
       }
       if (err) {
         return next(err);
