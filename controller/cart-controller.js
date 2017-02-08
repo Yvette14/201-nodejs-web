@@ -19,8 +19,7 @@ const CartController = class {
           }
           let items = data.map((doc) => {
             let cart = doc.toJSON();
-            let temp = transIdToUri(cart.items);
-            cart.items = temp;
+            cart.items = transIdToUri(cart.items);
             return cart;
           });
           done(null, items);
