@@ -47,7 +47,7 @@ const CategoryController = class {
     const id = req.params.id;
     async.waterfall([
       (done) => {
-        Item.findOne({categoryId: id}, done);
+        Item.findOne({category: id}, done);
       },
       (data, done) => {
         if (data) {

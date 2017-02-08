@@ -4,7 +4,7 @@ const httpCode = require('../constant/httpCode.json');
 
 function transIdToUri(items) {
   return items.map((item) => {
-    return {count: item.count, uri: 'items/' + item.itemId};
+    return {count: item.count, uri: 'items/' + item.item};
   })
 }
 

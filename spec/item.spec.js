@@ -40,7 +40,7 @@ describe('item api', () => {
     const item = {
       name: '新商品',
       price: 3.0,
-      categoryId: '589952c2e063c41484b0dc6f'
+      category: '589952c2e063c41484b0dc6f'
     };
     request(app)
       .post('/items')

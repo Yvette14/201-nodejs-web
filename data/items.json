@@ -2,31 +2,31 @@
   {
     "_id": "5899256418d3dc09c04e5552",
     "name": "商品一",
-    "categoryId": "589952c2e063c41484b0dc1f",
+    "category": "589952c2e063c41484b0dc1f",
     "price": 4.0
   },
   {
     "_id": "5899256418d3dc09c04e5553",
     "name": "商品二",
-    "categoryId": "589952c2e063c41484b0dc4f",
+    "category": "589952c2e063c41484b0dc4f",
     "price": 2.0
   },
   {
     "_id": "5899256418d3dc09c04e5554",
     "name": "商品三",
-    "categoryId": "589952c2e063c41484b0dc2f",
+    "category": "589952c2e063c41484b0dc2f",
     "price": 3.0
   },
   {
     "_id": "5899256418d3dc09c04e5555",
     "name": "商品四",
-    "categoryId": "589952c2e063c41484b0dc6f",
+    "category": "589952c2e063c41484b0dc6f",
     "price": 4.5
   },
   {
     "_id": "5899256418d3dc09c04e5556",
     "name": "商品五",
-    "categoryId": "589952c2e063c41484b0dc2f",
+    "category": "589952c2e063c41484b0dc2f",
     "price": 1.0
   }
 ]
