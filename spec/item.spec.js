@@ -19,13 +19,20 @@ describe('item api', () => {
       .end(done);
   });
 
-  it('get one', (done) => {
+  it('get one 200', (done) => {
     request(app)
       .get('/items/5899256418d3dc09c04e5552')
       .expect((res) => {
         res.statusCode.should.equal(200);
         res.body.name.should.equal('商品一');
       })
+      .end(done);
+  });
+
+  it('get one 404', (done) => {
+    request(app)
+      .get('/items/5899256418d3dc09c04e5542')
+      .expect(404)
       .end(done);
   });
 
@@ -50,10 +57,17 @@ describe('item api', () => {
       .end(done);
   });
 
-  it('delete', (done) => {
+  it('delete 204', (done) => {
     request(app)
       .delete('/items/5899256418d3dc09c04e5556')
       .expect(204)
+      .end(done);
+  });
+
+  it('delete 404', (done) => {
+    request(app)
+      .delete('/items/5899256418d3dc09c04e5546')
+      .expect(404)
       .end(done);
   });
 

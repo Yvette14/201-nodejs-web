@@ -19,13 +19,20 @@ describe('category', () => {
       .end(done);
   });
 
-  it('get one', (done) => {
+  it('get one 200', (done) => {
     request(app)
       .get('/categories/589952c2e063c41484b0dc1f')
       .expect((res) => {
         res.statusCode.should.equal(200);
         res.body.name.should.equal('类别一');
       })
+      .end(done);
+  });
+
+  it('get one 404', (done) => {
+    request(app)
+      .get('/categories/589952c2e063c41484b0dc1e')
+      .expect(404)
       .end(done);
   });
 
@@ -49,10 +56,17 @@ describe('category', () => {
       .end(done);
   });
 
-  it('delete', (done) => {
+  it('delete 204', (done) => {
     request(app)
       .delete('/categories/589952c2e063c41484b0dc6a')
       .expect(204)
+      .end(done);
+  });
+
+  it('delete 403', (done) => {
+    request(app)
+      .delete('/categories/589952c2e063c41484b0dc1f')
+      .expect(403)
       .end(done);
   });
 

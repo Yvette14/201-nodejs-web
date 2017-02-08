@@ -19,13 +19,20 @@ describe('cart', () => {
       .end(done);
   });
 
-  it('get one', (done) => {
+  it('get one 200', (done) => {
     request(app)
       .get('/carts/5899256418d3dc09c04e555a')
       .expect((res) => {
         res.statusCode.should.equal(200);
         res.body.userId.should.equal('001');
       })
+      .end(done);
+  });
+
+  it('get one 404', (done) => {
+    request(app)
+      .get('/carts/5899256418d3dc09c04e545a')
+      .expect(404)
       .end(done);
   });
 
@@ -61,10 +68,17 @@ describe('cart', () => {
       .end(done);
   });
 
-  it('delete', (done) => {
+  it('delete 204', (done) => {
     request(app)
       .delete('/carts/5899256418d3dc09c04e555a')
       .expect(204)
+      .end(done);
+  });
+
+  it('delete 404', (done) => {
+    request(app)
+      .delete('/carts/5899256418d3dc09c04e545a')
+      .expect(404)
       .end(done);
   });
 
