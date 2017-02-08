@@ -71,7 +71,7 @@ describe('item api', () => {
       .end(done);
   });
 
-  it('put', (done) => {
+  it('update 204', (done) => {
     const item = {
       price: 3.0
     };
@@ -80,5 +80,17 @@ describe('item api', () => {
       .send(item)
       .expect(204)
       .end(done);
-  })
+  });
+
+  it('update 404', (done) => {
+    const item = {
+      price: 3.0
+    };
+    request(app)
+      .put('/items/5899256418d3dc09c04e5452')
+      .send(item)
+      .expect(404)
+      .end(done);
+  });
+
 });
