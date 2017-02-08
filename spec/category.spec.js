@@ -70,7 +70,7 @@ describe('category', () => {
       .end(done);
   });
 
-  it('put', (done) => {
+  it('update 204', (done) => {
     const category = {
       name: '修改的类别'
     };
@@ -80,5 +80,17 @@ describe('category', () => {
       .send(category)
       .expect(204)
       .end(done);
-  })
+  });
+
+  it('update 404', (done) => {
+    const category = {
+      name: '修改的类别'
+    };
+
+    request(app)
+      .put('/categories/589952c2e063c41484b0dd1f')
+      .send(category)
+      .expect(404)
+      .end(done);
+  });
 });
