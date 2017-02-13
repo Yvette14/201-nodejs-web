@@ -1,42 +1,39 @@
 require('should');
 const request = require('supertest');
-const refreshMongo = require('../refresh-mongo');
+const refreshMongo = require('../mongo-tool');
 const app = require('../app');
 const Cart = require('../model/cart');
 
 describe('cart', () => {
-  beforeEach(() => {
-    refreshMongo();
-  });
 
-  it('get all', (done) => {
+  it('GET /carts', (done) => {
     request(app)
       .get('/carts')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.totalCount.should.equal(3);
       })
       .end(done);
   });
 
-  it('get one 200', (done) => {
+  it('GET /carts:id 200', (done) => {
     request(app)
       .get('/carts/5899256418d3dc09c04e555a')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.userId.should.equal('001');
       })
       .end(done);
   });
 
-  it('get one 404', (done) => {
+  it('GET /carts:id 404', (done) => {
     request(app)
       .get('/carts/5899256418d3dc09c04e545a')
       .expect(404)
       .end(done);
   });
 
-  it('create', (done) => {
+  it('POST /carts', (done) => {
     const cart = {
       userId: '010',
       items: [
@@ -68,21 +65,21 @@ describe('cart', () => {
       .end(done);
   });
 
-  it('delete 204', (done) => {
+  it('DELETE /carts:id 204', (done) => {
     request(app)
       .delete('/carts/5899256418d3dc09c04e555a')
       .expect(204)
       .end(done);
   });
 
-  it('delete 404', (done) => {
+  it('DELETE /carts:id 404', (done) => {
     request(app)
       .delete('/carts/5899256418d3dc09c04e545a')
       .expect(404)
       .end(done);
   });
 
-  it('update 204', (done) => {
+  it('PUT /carts:id 204', (done) => {
     const cart = {
       userId: '002',
       items: [
@@ -104,7 +101,7 @@ describe('cart', () => {
       .end(done);
   });
 
-  it('update 404', (done) => {
+  it('DELETE /carts:id 404', (done) => {
     const cart = {
       userId: '002',
       items: [

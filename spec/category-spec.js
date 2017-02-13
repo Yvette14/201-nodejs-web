@@ -1,42 +1,39 @@
 require('should');
 const request = require('supertest');
-const refreshMongo = require('../refresh-mongo');
+const refreshMongo = require('../mongo-tool');
 const app = require('../app');
 const Category = require('../model/category');
 
 describe('category', () => {
-  beforeEach(() => {
-    refreshMongo();
-  });
 
-  it('get all', (done) => {
+  it('GET /categories', (done) => {
     request(app)
       .get('/categories')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.totalCount.should.equal(7);
       })
       .end(done);
   });
 
-  it('get one 200', (done) => {
+  it('GET /categories/:id 200', (done) => {
     request(app)
       .get('/categories/589952c2e063c41484b0dc1f')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.name.should.equal('类别一');
       })
       .end(done);
   });
 
-  it('get one 404', (done) => {
+  it('GET /categories/:id 404', (done) => {
     request(app)
       .get('/categories/589952c2e063c41484b0dc1e')
       .expect(404)
       .end(done);
   });
 
-  it('create', (done) => {
+  it('POST /categories', (done) => {
     const category = {
       name: '新类别'
     };
@@ -56,21 +53,21 @@ describe('category', () => {
       .end(done);
   });
 
-  it('delete 204', (done) => {
+  it('DELETE /categories/:id 204', (done) => {
     request(app)
       .delete('/categories/589952c2e063c41484b0dc6a')
       .expect(204)
       .end(done);
   });
 
-  it('delete 400', (done) => {
+  it('DELETE /categories/:id 400', (done) => {
     request(app)
       .delete('/categories/589952c2e063c41484b0dc1f')
       .expect(400)
       .end(done);
   });
 
-  it('update 204', (done) => {
+  it('PUT /categories/:id 204', (done) => {
     const category = {
       name: '修改的类别'
     };
@@ -82,7 +79,7 @@ describe('category', () => {
       .end(done);
   });
 
-  it('update 404', (done) => {
+  it('PUT /categories/:id 400', (done) => {
     const category = {
       name: '修改的类别'
     };

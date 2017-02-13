@@ -1,42 +1,39 @@
 require('should');
 const request = require('supertest');
-const refreshMongo = require('../refresh-mongo');
+const refreshMongo = require('../mongo-tool');
 const app = require('../app');
 const Item = require('../model/item');
 
 describe('item api', () => {
-  beforeEach(() => {
-    refreshMongo();
-  });
 
-  it('get all', (done) => {
+  it('GET /items', (done) => {
     request(app)
       .get('/items')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.totalCount.should.equal(5);
       })
       .end(done);
   });
 
-  it('get one 200', (done) => {
+  it('GET /items/:id 200', (done) => {
     request(app)
       .get('/items/5899256418d3dc09c04e5552')
+      .expect(200)
       .expect((res) => {
-        res.statusCode.should.equal(200);
         res.body.name.should.equal('商品一');
       })
       .end(done);
   });
 
-  it('get one 404', (done) => {
+  it('GET /items/:id 404', (done) => {
     request(app)
       .get('/items/5899256418d3dc09c04e5542')
       .expect(404)
       .end(done);
   });
 
-  it('create', (done) => {
+  it('POST /items', (done) => {
     const item = {
       name: '新商品',
       price: 3.0,
@@ -57,21 +54,21 @@ describe('item api', () => {
       .end(done);
   });
 
-  it('delete 204', (done) => {
+  it('DELETE /items/:id 204', (done) => {
     request(app)
       .delete('/items/5899256418d3dc09c04e5556')
       .expect(204)
       .end(done);
   });
 
-  it('delete 404', (done) => {
+  it('DELETE /items/:id 404', (done) => {
     request(app)
       .delete('/items/5899256418d3dc09c04e5546')
       .expect(404)
       .end(done);
   });
 
-  it('update 204', (done) => {
+  it('PUT /items/:id 204', (done) => {
     const item = {
       price: 3.0
     };
@@ -82,7 +79,7 @@ describe('item api', () => {
       .end(done);
   });
 
-  it('update 404', (done) => {
+  it('PUT /items/:id 404', (done) => {
     const item = {
       price: 3.0
     };

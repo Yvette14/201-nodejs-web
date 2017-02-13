@@ -51,7 +51,7 @@ const CategoryController = class {
       },
       (data, done) => {
         if (data) {
-          done(true, null);
+          return done(true, null);
         } else {
           Category.findOneAndRemove({_id: categoryId}, done);
         }

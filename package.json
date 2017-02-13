@@ -6,8 +6,8 @@
   "scripts": {
     "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- app.js",
-    "refreshMongo": "npm run babel-node -- refresh-mongo-handler.js",
-    "test": "./node_modules/.bin/mocha  --compilers js:babel-core/register spec/*spec.js"
+    "refreshMongo": "npm run babel-node -- refresh-mongo.js",
+    "test": "./node_modules/.bin/mocha --recursive spec/"
   },
   "author": "",
   "license": "ISC",
